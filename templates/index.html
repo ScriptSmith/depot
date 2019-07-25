@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Depot</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<h1>Usage</h1>
+<p>Jobs are UUID-v4 ids</p>
+<h2>GET</h2>
+<pre>'/zip?id={job}' to get an uncompressed zip copy of a job</pre>
+<pre>'/jobs/{job}/{filepath}' to view a file or directory</pre>
+<h2>PUT</h2>
+<pre>'/jobs/{job}/{filepath}' to upload a file</pre>
+<h1>Jobs</h1>
+<table>
+    <thead>
+    <tr>
+        <td>Job</td>
+        <td>Files</td>
+        <td>Zip</td>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .Jobs}}
+        <tr>
+            <td>{{.}}</td>
+            <td><a href="/jobs/{{.}}/">Link</a></td>
+            <td><a href="/zip?id={{.}}">Link</a></td>
+        </tr>
+    {{end}}
+    </tbody>
+</table>
+</body>
+</html>
