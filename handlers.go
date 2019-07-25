@@ -91,7 +91,6 @@ func JobsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		byteCount, err := io.Copy(f, r.Body)
-		fmt.Printf("Wrote %d bytes", byteCount)
 		if err != nil {
 			logAndRespond(w, r, "error writing file")
 			return
