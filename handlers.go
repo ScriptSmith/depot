@@ -84,19 +84,32 @@ func JobsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		f, err := os.Create(filePath)
+		tmp, err := ioutil.TempFile("", "put_")
 		if err != nil {
-			logAndRespond(w, r, "error creating file")
+			logAndRespond(w, r, "error creating a new file")
 			return
 		}
 
-		byteCount, err := io.Copy(f, r.Body)
+		byteCount, err := io.Copy(tmp, r.Body)
 		if err != nil {
 			logAndRespond(w, r, "error writing file")
 			return
 		} else if byteCount != r.ContentLength {
 			errMsg := fmt.Sprintf("Wrote %d bytes of %d", byteCount, r.ContentLength)
 			logAndRespond(w, r, errMsg)
+			return
+		}
+
+		err = os.Rename(tmp.Name(), filePath)
+		if err != nil {
+			logAndRespond(w, r, "error adding file at path")
+			return
+		}
+
+		err = os.Chmod(filePath, 0666)
+		if err != nil {
+			logAndRespond(w, r, "error updating file permissions")
+			return
 		} else {
 			log.Printf("%s: uploaded %s (%d)", r.RemoteAddr, filePath, byteCount)
 		}
