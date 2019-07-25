@@ -20,6 +20,7 @@ type RootData struct {
 	Jobs []string
 }
 
+// Send an error message to client and log
 func logAndRespond(w http.ResponseWriter, r *http.Request, message string) {
 	log.Printf("%s: %s", r.RemoteAddr, message)
 	http.Error(w, message, 500)
@@ -119,6 +120,7 @@ func JobsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Serve zip files
 func ZipHandler(w http.ResponseWriter, r *http.Request) {
 	keys := r.URL.Query()
 	jobName := keys.Get("id")
