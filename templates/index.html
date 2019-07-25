@@ -13,10 +13,10 @@
 </head>
 <body>
 <h1>Usage</h1>
-<p>Jobs are UUID-v4 ids</p>
+<p>Jobs describe a unique scraping job, and are UUID4 ids</p>
 <h2>GET</h2>
-<pre>'/zip?id={job}' to get an uncompressed zip copy of a job</pre>
 <pre>'/jobs/{job}/{filepath}' to view a file or directory</pre>
+<pre>'/zip?id={job}' to get zipped copy of a job's contents</pre>
 <h2>PUT</h2>
 <pre>'/jobs/{job}/{filepath}' to upload a file</pre>
 <h1>Jobs</h1>
