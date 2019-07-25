@@ -1,10 +1,14 @@
 # Depot
-A simple HTTP server to store scraping jobs
+A simple HTTP server to store files from scraping and processing jobs.
+
+Depot is designed with speed and simplicity in mind, to be used with an attached disk as a 'quick and dirty' object storage microservice.
+
 
 ## Features
-- Access files with a GET request
+- Download files with a GET request
 - Upload files with a PUT request
 - Download a zipped copy of a job's files
+
 
 ## Build
 ```
