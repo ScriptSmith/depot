@@ -1,7 +1,6 @@
 package main
 
 import (
-	"./zipstream"
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
@@ -129,7 +128,7 @@ func ZipHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := zipstream.ZipDir(jobName, DepotRoot, w, r)
+	err := ZipDir(jobName, handlers.root, w, r)
 	if err == nil {
 		log.Printf("%s: zipped %s", r.RemoteAddr, jobName)
 	} else {

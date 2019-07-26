@@ -1,4 +1,4 @@
-package zipstream
+package main
 
 import (
 	"compress/flate"
