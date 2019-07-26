@@ -8,15 +8,13 @@ import (
 	"os"
 )
 
-var DepotRoot = os.Getenv("DEPOT_ROOT")
-
 // Check that DEPOT_ROOT is defined and can be accessed
-func checkRoot() {
-	if DepotRoot == "" {
+func checkRoot(root string) {
+	if root == "" {
 		log.Fatalf("DEPOT_ROOT not defined")
 	}
 
-	info, err := os.Stat(DepotRoot)
+	info, err := os.Stat(root)
 	if err != nil {
 		log.Fatalf("DEPOT_ROOT error: %s", err)
 	} else if !info.IsDir() {
@@ -24,16 +22,28 @@ func checkRoot() {
 	}
 }
 
+// Get the mux router
+func getRouter(handlers *Handlers) *mux.Router {
+	r := mux.NewRouter()
+	r.HandleFunc("/", handlers.RootHandler)
+	r.HandleFunc("/jobs/{job}/{filepath:.*}", handlers.JobsHandler)
+	r.HandleFunc("/zip", handlers.ZipHandler)
+	return r
+}
+
 // Server setup
 func Server() {
 	// Check setup
-	checkRoot()
+	root := os.Getenv("DEPOT_ROOT")
+	checkRoot(root)
+
+	// Create handlers with root
+	handlers := &(Handlers{
+		root: root,
+	})
 
 	// Routing
-	r := mux.NewRouter()
-	r.HandleFunc("/", RootHandler)
-	r.HandleFunc("/jobs/{job}/{filepath:.*}", JobsHandler)
-	r.HandleFunc("/zip", ZipHandler)
+	r := getRouter(handlers)
 
 	// Port
 	addr := ":8080"

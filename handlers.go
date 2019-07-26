@@ -19,6 +19,10 @@ type RootData struct {
 	Jobs []string
 }
 
+type Handlers struct {
+	root string
+}
+
 // Send an error message to client and log
 func logAndRespond(w http.ResponseWriter, r *http.Request, message string) {
 	log.Printf("%s: %s", r.RemoteAddr, message)
@@ -26,14 +30,14 @@ func logAndRespond(w http.ResponseWriter, r *http.Request, message string) {
 }
 
 // Serve the index page
-func RootHandler(w http.ResponseWriter, r *http.Request) {
+func (handlers *Handlers) RootHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		logAndRespond(w, r, "error serving index")
 		return
 	}
 
-	files, err := ioutil.ReadDir(DepotRoot)
+	files, err := ioutil.ReadDir(handlers.root)
 	if err != nil {
 		logAndRespond(w, r, "error reading root dir")
 		return
@@ -57,10 +61,10 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Serve the job pages
-func JobsHandler(w http.ResponseWriter, r *http.Request) {
+func (handlers *Handlers) JobsHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	jobName := vars["job"]
-	filePath := path.Join(DepotRoot, jobName, vars["filepath"])
+	filePath := path.Join(handlers.root, jobName, vars["filepath"])
 
 	_, err := uuid.Parse(jobName)
 	if err != nil {
@@ -120,7 +124,7 @@ func JobsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Serve zip files
-func ZipHandler(w http.ResponseWriter, r *http.Request) {
+func (handlers *Handlers) ZipHandler(w http.ResponseWriter, r *http.Request) {
 	keys := r.URL.Query()
 	jobName := keys.Get("id")
 	if jobName == "" {
