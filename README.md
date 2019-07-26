@@ -1,7 +1,9 @@
 # Depot
-A simple HTTP server to store files from scraping and processing jobs.
+[![Build Status](https://travis-ci.org/ScriptSmith/depot.svg?branch=master)](https://travis-ci.org/ScriptSmith/depot)
 
-Depot is designed with speed and simplicity in mind, to be used with an attached disk as a 'quick and dirty' object storage microservice.
+A fast and simple HTTP server to store files from scraping and processing jobs.
+
+Depot is designed to be used with an attached disk as a 'quick and dirty' object storage microservice.
 
 
 ## Features
