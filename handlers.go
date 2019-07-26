@@ -81,13 +81,6 @@ func (handlers *Handlers) JobsHandler(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, filePath)
 
 	case "PUT":
-		fileDir, _ := filepath.Split(filePath)
-		err = os.MkdirAll(fileDir, 0777)
-		if err != nil {
-			logAndRespond(w, r, "error creating file directory path")
-			return
-		}
-
 		tmp, err := ioutil.TempFile("", "put_")
 		if err != nil {
 			logAndRespond(w, r, "error creating a new file")
@@ -104,8 +97,16 @@ func (handlers *Handlers) JobsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		fileDir, _ := filepath.Split(filePath)
+		err = os.MkdirAll(fileDir, 0777)
+		if err != nil {
+			logAndRespond(w, r, "error creating file directory path")
+			return
+		}
+
 		err = os.Rename(tmp.Name(), filePath)
 		if err != nil {
+			_ = os.Remove(tmp.Name())
 			logAndRespond(w, r, "error adding file at path")
 			return
 		}
