@@ -6,20 +6,20 @@
     <title>Depot</title>
     <style>
         table, th, td {
+            padding: 5px;
+            text-align: center;
             border: 1px solid black;
             border-collapse: collapse;
+        }
+
+        thead {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-<h1>Usage</h1>
-<p>Jobs describe a unique scraping job, and are UUID4 ids</p>
-<h2>GET</h2>
-<pre>'/jobs/{job}/{filepath}' to view a file or directory</pre>
-<pre>'/zip?id={job}' to get zipped copy of a job's contents</pre>
-<h2>PUT</h2>
-<pre>'/jobs/{job}/{filepath}' to upload a file</pre>
-<h1>Jobs</h1>
+<h1>Depot</h1>
+{{if .Jobs}}
 <table>
     <thead>
     <tr>
@@ -38,5 +38,13 @@
     {{end}}
     </tbody>
 </table>
+{{else}}
+<p>There are currently no jobs to display</p>
+{{end}}
+<h2>GET</h2>
+<pre>'/jobs/{job}/{filepath}' to view a file or directory</pre>
+<pre>'/zip?id={job}' to stream a zipped copy of a job's contents</pre>
+<h2>PUT</h2>
+<pre>'/jobs/{job}/{filepath}' to upload a file</pre>
 </body>
 </html>
