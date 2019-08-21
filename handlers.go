@@ -116,6 +116,7 @@ func (handlers *Handlers) JobsHandler(w http.ResponseWriter, r *http.Request) {
 			logAndRespond(w, r, "error updating file permissions")
 			return
 		} else {
+            _, _ = fmt.Fprintf(w, "Wrote %d bytes of %d", byteCount, byteCount)
 			log.Printf("%s: uploaded %s (%d)", r.RemoteAddr, filePath, byteCount)
 		}
 
