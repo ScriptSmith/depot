@@ -1,5 +1,6 @@
 # Depot
 [![Build Status](https://travis-ci.org/ScriptSmith/depot.svg?branch=master)](https://travis-ci.org/ScriptSmith/depot)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/scriptsmith/depot)](https://hub.docker.com/r/scriptsmith/depot)
 
 A fast and simple HTTP server to store files from scraping and processing jobs.
 
@@ -39,4 +40,10 @@ $ ./depot
 ```
 
 Access the page to see instructions and a list of current jobs
+
+## Docker
+
+```
+docker run -p 8080:8080 scriptsmith/depot
+```
 
