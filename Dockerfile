@@ -7,8 +7,8 @@ WORKDIR /go/src/github.com/scriptsmith/depot
 COPY *.go ./
 
 # Build project
-RUN go get ./...
-RUN go build
+RUN go get -v ./...
+RUN go build -v
 
 # App
 #####
