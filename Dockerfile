@@ -12,12 +12,12 @@ RUN go build
 
 # App
 #####
-FROM nginx:latest
+FROM golang:latest
 WORKDIR /app
 
 # Copy app
 COPY --from=builder /go/src/github.com/scriptsmith/depot/depot .
-COPY templates .
+COPY templates ./templates
 
 # Setup environment
 RUN mkdir /data
