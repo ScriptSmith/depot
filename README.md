@@ -43,7 +43,18 @@ Access the page to see instructions and a list of current jobs
 
 ## Docker
 
+Run `scriptsmith/depot` and forward port `8080`
 ```
 docker run -p 8080:8080 scriptsmith/depot
+```
+
+Use authentication and attach dir on host:
+
+```
+docker run -p 8080:8080 \
+ -e DEPOT_USER=depot \
+ -e DEPOT_PASS=pass \
+ -v /tmp/dr:/data \
+ scriptsmith/depot
 ```
 
