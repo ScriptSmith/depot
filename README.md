@@ -15,7 +15,8 @@ Depot is designed to be used with an attached disk as a 'quick and dirty' object
 
 ## Build
 ```
-go build .
+go get -v github.com/scriptsmith/depot
+go build -v github.com/scriptsmith/depot
 ```
 
 ## Run
@@ -29,7 +30,7 @@ export DEPOT_ROOT=/tmp/dr
 Run
 
 ```
-./depot
+go run github.com/scriptsmith/depot
 ```
 
 ```
