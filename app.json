@@ -1,0 +1,13 @@
+{
+  "name": "depot",
+  "env": {
+    "DEPOT_USER": {
+      "description": "basic access authentication username",
+      "required": false
+    },
+    "DEPOT_PASS": {
+      "description": "basic access authentication password",
+      "required": false
+    }
+  }
+}
