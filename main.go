@@ -36,14 +36,25 @@ func Server() {
 	// Check setup
 	root := os.Getenv("DEPOT_ROOT")
 	checkRoot(root)
+	user := os.Getenv("DEPOT_USER")
+	pass := os.Getenv("DEPOT_PASS")
 
 	// Create handlers with root
 	handlers := &(Handlers{
 		root: root,
 	})
 
+	// Define auth
+	auth := &(Auth{
+		user: user,
+		pass: pass,
+	})
+
 	// Routing
 	r := getRouter(handlers)
+
+	// Auth
+	r.Use(auth.Middleware)
 
 	// Port
 	addr := ":8080"
