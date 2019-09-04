@@ -1,4 +1,4 @@
-# ![](assets/logo.png) Depot
+# Depot
 
 [![Build Status](https://travis-ci.org/ScriptSmith/depot.svg?branch=master)](https://travis-ci.org/ScriptSmith/depot)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/scriptsmith/depot)](https://hub.docker.com/r/scriptsmith/depot)
