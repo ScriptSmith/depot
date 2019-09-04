@@ -47,5 +47,10 @@
 <pre>'/zip?id={job}' to stream a zipped copy of a job's contents</pre>
 <h2>PUT</h2>
 <pre>'/jobs/{job}/{filepath}' to upload a file</pre>
+{{if .Deletion}}
+    <h2>DELETE</h2>
+    <pre>'/jobs/{job}/' to delete a job</pre>
+    <pre>'/jobs/{job}/{filepath}' to delete a file</pre>
+{{end}}
 </body>
 </html>

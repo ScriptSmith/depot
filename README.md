@@ -42,6 +42,14 @@ $ ./depot
 
 Access the page to see instructions and a list of current jobs
 
+## Environment variables
+|Name                    |Required|Usage                                    |
+|------------------------|--------|-----------------------------------------|
+|`DEPOT_ROOT`            |**Yes** |Path to the root directory to store files|
+|`DEPOT_USER`            |No      |Username for basic access authentication |
+|`DEPOT_PASS`            |No      |Password for basic access authentication |
+|`DEPOT_DISABLE_DELETION`|No      |Disable the `DELETE` request             |
+
 ## Docker
 
 Run `scriptsmith/depot` and forward port `8080`

@@ -67,7 +67,8 @@ func TestJobs(t *testing.T) {
 	fileBody := bytes.NewReader(body)
 
 	// Upload body stream
-	newFileUrl := fmt.Sprintf("/jobs/%s/%s", jobId, fileDownloadPath)
+	newJobUrl := fmt.Sprintf("/jobs/%s/", jobId)
+	newFileUrl := fmt.Sprintf("%s%s", newJobUrl, fileDownloadPath)
 	t.Logf(newFileUrl)
 	req, err := http.NewRequest("PUT", newFileUrl, fileBody)
 	if err != nil {
@@ -95,7 +96,7 @@ func TestJobs(t *testing.T) {
 	router.ServeHTTP(rr, req)
 	rrBody, err := ioutil.ReadAll(rr.Body)
 	if err != nil {
-		t.Fatalf("Failed reading response body: %s", err)
+		t.Fatalf("Failed reading GET response body: %s", err)
 	}
 
 	// Check it's valid
@@ -103,6 +104,40 @@ func TestJobs(t *testing.T) {
 		t.Fatalf("Incorrect status code %d: %s", status, rr.Body)
 	} else if size := int64(len(rrBody)); size != fileSize {
 		t.Fatalf("Incorrect saved file size: %d not %d", size, fileSize)
+	}
+
+	// Delete it
+	req, err = http.NewRequest("DELETE", newFileUrl, nil)
+	rr = httptest.NewRecorder()
+	router.ServeHTTP(rr, req)
+	rrBody, err = ioutil.ReadAll(rr.Body)
+	if err != nil {
+		t.Fatalf("Failed reading DELETE response body: %s", err)
+	} else if status := rr.Code; status != http.StatusOK {
+		t.Fatalf("Incorrect status code %d: %s", status, rr.Body)
+	}
+
+	// Check file doesn't exist
+	info, err = os.Stat(path.Join(RootTest, jobId, fileDownloadPath))
+	if err == nil {
+		t.Fatalf("File still exists: %s", err)
+	}
+
+	// Delete job
+	req, err = http.NewRequest("DELETE", newJobUrl, nil)
+	rr = httptest.NewRecorder()
+	router.ServeHTTP(rr, req)
+	rrBody, err = ioutil.ReadAll(rr.Body)
+	if err != nil {
+		t.Fatalf("Failed reading DELETE response body: %s", err)
+	} else if status := rr.Code; status != http.StatusOK {
+		t.Fatalf("Incorrect job status code %d: %s", status, rr.Body)
+	}
+
+	// Check job doesn't exist
+	info, err = os.Stat(path.Join(RootTest, jobId))
+	if err == nil {
+		t.Fatalf("Job still exists: %s", err)
 	}
 }
 

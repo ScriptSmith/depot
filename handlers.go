@@ -16,11 +16,13 @@ import (
 
 // Job container for index template
 type RootData struct {
-	Jobs []string
+	Jobs     []string
+	Deletion bool
 }
 
 type Handlers struct {
-	root string
+	root     string
+	deletion bool
 }
 
 // Send an error message to client and log
@@ -50,7 +52,7 @@ func (handlers *Handlers) RootHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	data := RootData{Jobs: dirs}
+	data := RootData{Jobs: dirs, Deletion: handlers.deletion}
 
 	err = tmpl.Execute(w, data)
 	if err == nil {
@@ -88,6 +90,21 @@ func (handlers *Handlers) JobsHandler(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		log.Printf("%s: serving %s", r.RemoteAddr, filePath)
 		http.ServeFile(w, r, filePath)
+
+	case "DELETE":
+		if !handlers.deletion {
+			logAndRespond(w, r, "Deletion disabled")
+		}
+
+		log.Printf("%s: deleting %s", r.RemoteAddr, filePath)
+		err = os.RemoveAll(filePath)
+		if err != nil {
+			log.Printf("%s: failed deleting %s - %s", r.RemoteAddr, filePath, err)
+			http.Error(w, "Failed deleting file(s) at path", 500)
+		} else {
+			log.Printf("%s: deleted %s", r.RemoteAddr, filePath)
+			_, _ = fmt.Fprintf(w, "Deleted file(s) at path")
+		}
 
 	case "PUT":
 		tmp, err := ioutil.TempFile("", "put_")

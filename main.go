@@ -39,10 +39,12 @@ func Server() {
 	checkRoot(root)
 	user := os.Getenv("DEPOT_USER")
 	pass := os.Getenv("DEPOT_PASS")
+	deletion := os.Getenv("DEPOT_DISABLE_DELETION")
 
 	// Create handlers with root
 	handlers := &(Handlers{
-		root: root,
+		root:     root,
+		deletion: deletion == "",
 	})
 
 	// Define auth
