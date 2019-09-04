@@ -18,6 +18,7 @@ WORKDIR /app
 # Copy app
 COPY --from=builder /go/src/github.com/scriptsmith/depot/depot .
 COPY templates ./templates
+COPY assets ./assets
 
 # Setup environment
 RUN mkdir /data
