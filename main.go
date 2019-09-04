@@ -26,6 +26,7 @@ func checkRoot(root string) {
 func getRouter(handlers *Handlers) *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/", handlers.RootHandler)
+	r.HandleFunc("/assets/{filepath:.*}", handlers.AssetsHandler)
 	r.HandleFunc("/jobs/{job}/{filepath:.*}", handlers.JobsHandler)
 	r.HandleFunc("/zip", handlers.ZipHandler)
 	return r

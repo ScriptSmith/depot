@@ -60,6 +60,15 @@ func (handlers *Handlers) RootHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Serve the asset files
+func (handlers *Handlers) AssetsHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	filePath := path.Join("assets", vars["filepath"])
+
+	log.Printf("%s: serving %s", r.RemoteAddr, filePath)
+	http.ServeFile(w, r, filePath)
+}
+
 // Serve the job pages
 func (handlers *Handlers) JobsHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
