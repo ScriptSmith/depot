@@ -12,6 +12,7 @@ Depot is designed to be used with an attached disk as a 'quick and dirty' object
 ## Features
 - Download files with a GET request
 - Upload files with a PUT request
+- Remove files with a DELETE request
 - Download a zipped copy of a job's files
 
 
@@ -36,7 +37,7 @@ go run github.com/scriptsmith/depot
 ```
 
 ```
-$ ./depot 
+$ ./depot
 2019/07/25 17:13:03 running at http://127.0.0.1:8080
 ```
 
