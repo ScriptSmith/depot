@@ -42,7 +42,7 @@ func TestJobs(t *testing.T) {
 	// Setup
 	jobId, fileUploadUrl, fileSize := jobFilesSetup(t)
 	fileDownloadPath := "newdir/test.out"
-	handlers := &Handlers{root: RootTest}
+	handlers := &Handlers{root: RootTest, deletion: true}
 	router := getRouter(handlers)
 
 	// Get test file
