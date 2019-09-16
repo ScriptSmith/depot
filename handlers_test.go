@@ -221,6 +221,7 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Fatalln("Couldn't create temp dir")
 	}
+	checkRoot(RootTest)
 
 	log.Printf("Using %s", RootTest)
 	m.Run()

@@ -47,7 +47,8 @@ func (handlers *Handlers) RootHandler(w http.ResponseWriter, r *http.Request) {
 
 	dirs := make([]string, 0)
 	for _, file := range files {
-		if file.IsDir() {
+		_, err := uuid.Parse(file.Name())
+		if file.IsDir() && err == nil {
 			dirs = append(dirs, file.Name())
 		}
 	}
@@ -107,7 +108,7 @@ func (handlers *Handlers) JobsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 	case "PUT":
-		tmp, err := ioutil.TempFile("", "put_")
+		tmp, err := ioutil.TempFile(path.Join(handlers.root, "tmp"), "put_")
 		if err != nil {
 			logAndRespond(w, r, "error creating a new file")
 			return

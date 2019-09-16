@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 )
 
 // Check that DEPOT_ROOT is defined and can be accessed
@@ -19,6 +20,17 @@ func checkRoot(root string) {
 		log.Fatalf("DEPOT_ROOT error: %s", err)
 	} else if !info.IsDir() {
 		log.Fatalf("DEPOT_ROOT is not a directory")
+	}
+
+	tmpDir := path.Join(root, "tmp")
+	info, err = os.Stat(tmpDir);
+	if err != nil {
+		err = os.Mkdir(tmpDir, 0777)
+		if err != nil {
+			log.Fatalf("Couldn't create tmp dir")
+		}
+	} else if !info.IsDir() {
+		log.Fatalf("tmp dir is not a directory")
 	}
 }
 
