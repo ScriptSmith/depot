@@ -18,6 +18,7 @@ Depot is designed to be used with an attached disk as a 'quick and dirty' object
 - Upload files with a PUT request
 - Remove files with a DELETE request
 - Download a zipped copy of a job's files
+- Uploading tool: [todepot](https://github.com/scriptsmith/todepot)
 
 
 ## Build
