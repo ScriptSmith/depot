@@ -1,3 +1,7 @@
+<p align="center">
+<img src="assets/logo.png" height="150">
+</p>
+
 # Depot
 
 [![Build Status](https://travis-ci.org/ScriptSmith/depot.svg?branch=master)](https://travis-ci.org/ScriptSmith/depot)
